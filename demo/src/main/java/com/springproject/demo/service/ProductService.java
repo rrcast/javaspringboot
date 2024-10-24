@@ -2,6 +2,7 @@ package com.springproject.demo.service;
 
 import com.springproject.demo.entity.Product;
 import com.springproject.demo.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
     }
 
     public Product createProduct(Product product) {
